@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 public class EvenementService {
@@ -47,7 +48,7 @@ public class EvenementService {
         return false;
     }
 
-    public List<Evenement> getEvenementsCreatedByClient(Client client) {
+    public Set<Evenement> getEvenementsCreatedByClient(Client client) {
         return evenementRepository.findByClient(client);
     }
 

@@ -10,11 +10,11 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-// import lombok.*;
+import lombok.*;
 import jakarta.persistence.OneToMany;
 
 @Entity
-// @Getter @Setter @AllArgsConstructor
+@Getter @Setter @AllArgsConstructor
 public class Client {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -56,16 +56,6 @@ public class Client {
     private String role;
 
 
-    public String getRole() {
-        return role;
-    }
-
-    public void setRole(String role) {
-        this.role = role;
-    }
-
-    public Client() { }
-
     public Client(String nom, String prenom, int age, String sexe, String telephone, String adresse, String mail,
             String username, String password) {
         super();
@@ -80,85 +70,6 @@ public class Client {
         this.password = password;
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getNom() {
-        return nom;
-    }
-
-    public void setNom(String nom) {
-        this.nom = nom;
-    }
-
-    public String getPrenom() {
-        return prenom;
-    }
-
-    public void setPrenom(String prenom) {
-        this.prenom = prenom;
-    }
-
-    public Integer getAge() {
-        return age;
-    }
-
-    public void setAge(Integer age) {
-        this.age = age;
-    }
-    
-    public String getSexe() {
-        return sexe;
-    }
-
-    public void setSexe(String sexe) {
-        this.sexe = sexe;
-    }
-
-     public String getTelephone() {
-        return telephone;
-    }
-
-    public void setTelephone(String telephone) {
-        this.telephone = telephone;
-    }
-
-    public String getAdresse() {
-        return adresse;
-    }
-
-    public void setAdresse(String adresse) {
-        this.adresse = adresse;
-    }
-
-    public String getMail() {
-        return mail;
-    }
-
-    public void setMail(String mail) {
-        this.mail = mail;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String motDePasse) {
-        this.password = motDePasse;
-    }
-        
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
 
     @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy="client")

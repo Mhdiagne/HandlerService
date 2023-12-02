@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
@@ -52,12 +53,12 @@ public class EvenementController {
 
 
     @GetMapping("/{id}/client")
-    public ResponseEntity<List<Evenement>> getEvenementsCreatedByUser(@PathVariable Long id) {
+    public ResponseEntity<Set<Evenement>> getEvenementsCreatedByUser(@PathVariable Long id) {
     Optional<Client> optionalClient = clientRepository.findById(id);
     
     if (optionalClient.isPresent()) {
         Client client = optionalClient.get();
-        List<Evenement> evenements = evenementService.getEvenementsCreatedByClient(client);
+        Set<Evenement> evenements = evenementService.getEvenementsCreatedByClient(client);
         return new ResponseEntity<>(evenements, HttpStatus.OK);
     } else {
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -81,7 +82,7 @@ public class EvenementController {
         String username = jwtService.getAuthUser(request);
         Client client = clientRepository.findByUsername(username).orElseThrow(()-> new RuntimeException("Client not found:"+username));
         evenement.setClient(client);
-        List<Prestataire> prestataires = evenement.getPrestataires();
+        Set<Prestataire> prestataires = evenement.getPrestataires();
         Evenement newEvenement = evenementService.createEvenement(evenement);
         newEvenement.setPrestataires(prestataires);
         logger.info("Event created");
@@ -92,27 +93,27 @@ public class EvenementController {
         }
     }
 
-    // @PutMapping("/{id}")
-    // public ResponseEntity<Evenement> updateEvenement(
-    //     @PathVariable Long Id,
-    //     @PathVariable Long evenementId,
-    //     @RequestBody Evenement evenement) {
+    @PutMapping("/{id}/put")
+    public ResponseEntity<Evenement> updateEvenement(
+        @PathVariable Long Id,
+        @PathVariable Long evenementId,
+        @RequestBody Evenement evenement) {
     
-    //     Optional<Client> optionalClient = clientRepository.findById(Id);
+        Optional<Client> optionalClient = clientRepository.findById(Id);
     
-    //     if (optionalClient.isPresent()) {
-    //         Client client = optionalClient.get();
-    //         // Vérifiez que l'événement appartient réellement au client avant de le mettre à jour
-    //         if (evenementService.evenementBelongsToClient(evenementId, Id)) {
-    //             Evenement updatedEvenement = evenementService.updateEvenement(evenementId, evenement);
-    //             return new ResponseEntity<>(updatedEvenement, HttpStatus.OK);
-    //         } else {
-    //             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-    //         }
-    //     } else {
-    //         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-    //     }
-    // }
+        if (optionalClient.isPresent()) {
+            Client client = optionalClient.get();
+            // Vérifiez que l'événement appartient réellement au client avant de le mettre à jour
+            if (evenementService.evenementBelongsToClient(evenementId, Id)) {
+                Evenement updatedEvenement = evenementService.updateEvenement(evenementId, evenement);
+                return new ResponseEntity<>(updatedEvenement, HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
 
     @DeleteMapping("/{id}")
     public void deleteEvenement(@PathVariable Long id) {

@@ -1,6 +1,7 @@
 package com.gestionEvent.handlerService.HandlerService.entities;
 
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
@@ -17,6 +18,6 @@ import java.util.Date;
 @RepositoryRestResource(path = "evenements")
 public interface EvenementRepository extends  CrudRepository <Evenement, Long> {
 
-    List<Evenement> findByClient(Client client);
+    Set<Evenement> findByClient(Client client);
 
 }
