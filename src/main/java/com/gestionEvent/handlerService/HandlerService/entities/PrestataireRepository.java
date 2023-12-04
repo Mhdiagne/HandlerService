@@ -13,6 +13,9 @@ public interface PrestataireRepository extends CrudRepository<Prestataire, Long>
     Optional<Prestataire> findByUsername(String username);
     List<Prestataire> findByNomEntreprise(String nomEntreprise);
 
+    @Query("SELECT p.id FROM Prestataire p WHERE p.username = :username")
+    Long findIdUsername(@Param("username") String username);
+
     @Query("SELECT p.role FROM Prestataire p WHERE p.username = :username")
     String findRoleUsername(@Param("username") String username);
 }

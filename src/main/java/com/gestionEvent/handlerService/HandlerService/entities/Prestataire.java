@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -19,6 +20,7 @@ import jakarta.persistence.JoinTable;
 import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -30,6 +32,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"}) 
 public class Prestataire {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -61,10 +64,9 @@ public class Prestataire {
 
 
 
-    public Prestataire(Set<Evenement> evenements,String nom, String prenom, String nomEntreprise, String desEntreprise,
+    public Prestataire(String nom, String prenom, String nomEntreprise, String desEntreprise,
             String telephone, String adresse, String email, String fonction, String username, String password, int tarif, int note , String image, 
             String role) {
-        this.evenements = evenements;
         this.nom = nom;
         this.prenom = prenom;
         this.nomEntreprise = nomEntreprise;
@@ -80,13 +82,13 @@ public class Prestataire {
         this.tarif = tarif;
         this.image = image;
     }
-    @JsonIgnore
-	@ManyToMany(mappedBy = "prestataires", fetch = FetchType.LAZY)
-	private Set<Evenement> evenements = new HashSet<>();	
+    // @JsonIgnore
+	// @ManyToMany(mappedBy = "prestataires", fetch = FetchType.LAZY)
+	// private Set<Evenement> evenements = new HashSet<>();	
 
-    // @ManyToOne(fetch = FetchType.LAZY)
-    // @JoinColumn(name = "evenement")
-    // private Evenement evenement;
+    @JsonIgnore
+    @OneToMany(mappedBy = "prestataire",fetch = FetchType.LAZY)
+    private Set<Prestation> prestations = new HashSet<>();
  
     public String getStarRating() {
         // Convertir la note en étoiles

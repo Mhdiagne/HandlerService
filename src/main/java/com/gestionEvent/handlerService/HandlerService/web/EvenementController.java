@@ -6,6 +6,8 @@ import com.gestionEvent.handlerService.HandlerService.entities.ClientRepository;
 import com.gestionEvent.handlerService.HandlerService.entities.Evenement;
 import com.gestionEvent.handlerService.HandlerService.entities.Prestataire;
 import com.gestionEvent.handlerService.HandlerService.entities.PrestataireRepository;
+import com.gestionEvent.handlerService.HandlerService.entities.Prestation;
+import com.gestionEvent.handlerService.HandlerService.entities.PrestationRepository;
 import com.gestionEvent.handlerService.HandlerService.service.ClientService;
 import com.gestionEvent.handlerService.HandlerService.service.EvenementService;
 import com.gestionEvent.handlerService.HandlerService.service.JwtService;
@@ -46,6 +48,9 @@ public class EvenementController {
     @Autowired
     private ClientRepository clientRepository;
 
+    @Autowired
+    private PrestationRepository prestationRepository;
+
 
     public EvenementController(EvenementService evenementService) {
         this.evenementService = evenementService;
@@ -82,9 +87,7 @@ public class EvenementController {
         String username = jwtService.getAuthUser(request);
         Client client = clientRepository.findByUsername(username).orElseThrow(()-> new RuntimeException("Client not found:"+username));
         evenement.setClient(client);
-        Set<Prestataire> prestataires = evenement.getPrestataires();
-        Evenement newEvenement = evenementService.createEvenement(evenement);
-        newEvenement.setPrestataires(prestataires);
+        Evenement newEvenement = evenementService.createEvenement(evenement);   
         logger.info("Event created");
         if (newEvenement!= null){
             return new ResponseEntity<>(evenementService.createEvenement(newEvenement), HttpStatus.OK);
@@ -115,8 +118,14 @@ public class EvenementController {
         }
     }
 
-    @DeleteMapping("/{id}")
-    public void deleteEvenement(@PathVariable Long id) {
-        evenementService.deleteEvenement(id);
+    @GetMapping("/{id}/prestations")
+    public ResponseEntity<Set<Prestation>> getPrestationPrestataire(@PathVariable Long id){
+        Set<Prestation> listes = prestationRepository.getByEvenementId(id);
+        return new ResponseEntity<>(listes,HttpStatus.OK);
     }
+
+    // @DeleteMapping("/{id}")
+    // public void deleteEvenement(@PathVariable Long id) {
+    //     evenementService.deleteEvenement(id);
+    // }
 }

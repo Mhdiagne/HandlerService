@@ -3,6 +3,7 @@ package com.gestionEvent.handlerService.HandlerService.entities;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -14,7 +15,8 @@ import lombok.*;
 import jakarta.persistence.OneToMany;
 
 @Entity
-@Getter @Setter @AllArgsConstructor
+@Getter @Setter @AllArgsConstructor @NoArgsConstructor
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"}) 
 public class Client {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -57,7 +59,7 @@ public class Client {
 
 
     public Client(String nom, String prenom, int age, String sexe, String telephone, String adresse, String mail,
-            String username, String password) {
+            String username, String password, String role) {
         super();
         this.nom = nom;
         this.prenom = prenom;
@@ -68,6 +70,7 @@ public class Client {
         this.mail = mail;
         this.username =username;
         this.password = password;
+        this.role = role;
     }
 
 

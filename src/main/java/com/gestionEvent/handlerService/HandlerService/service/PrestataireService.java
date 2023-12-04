@@ -37,6 +37,10 @@ public class PrestataireService  {
         prestataireRepository.save(prestataire);
     }
 
+    public Long getIdUsername(String username){
+        return prestataireRepository.findIdUsername(username);
+    }
+
     public String getRoleUsername(String username){
         return prestataireRepository.findRoleUsername(username);
     }

@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -25,13 +26,14 @@ import jakarta.persistence.OneToMany;
 import lombok.*;
 
 
-@Getter @Setter @AllArgsConstructor
+@Getter @Setter @AllArgsConstructor @NoArgsConstructor
 @Entity
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"}) 
 public class Evenement {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(nullable = false, updatable = false)
-    private long id;
+    private Long id;
 
     private String nomEvenement;
     private String dateEvenement;
@@ -43,7 +45,7 @@ public class Evenement {
 
 
     public Evenement(String nomEvenement, String typeEvenement, String dateEvenement, String lieu, String description,
-            int budget,int duree, Client client, Set<Prestataire> prestataires) {
+            int budget,int duree, Client client) {
         this.nomEvenement = nomEvenement;
         this.typeEvenement = typeEvenement;
         this.dateEvenement = dateEvenement;
@@ -52,34 +54,34 @@ public class Evenement {
         this.budget = budget;
         this.duree = duree;
         this.client = client;
-        this.prestataires=prestataires;
     }
 
 //-------------Gerer les relation entre les tables  
 
-    @JsonIgnore
-	@ManyToMany(
-    fetch = FetchType.LAZY,
-	cascade = { CascadeType.PERSIST, CascadeType.MERGE })
-	@JoinTable(
-			name = "Prestation",
-			joinColumns = @JoinColumn(name = "id_evenement"), 	
-			inverseJoinColumns = @JoinColumn(name = "id_prestataire")
-	)
-	private Set<Prestataire> prestataires = new HashSet<>();	
+    // @JsonIgnore
+	// @ManyToMany(
+    // fetch = FetchType.LAZY,
+	// cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+	// @JoinTable(
+	// 		name = "Prestation",
+	// 		joinColumns = @JoinColumn(name = "id_evenement"), 	
+	// 		inverseJoinColumns = @JoinColumn(name = "id_prestataire")
+	// )
+	// private Set<Prestataire> prestataires = new HashSet<>();	
 
 
     // @JsonIgnore
     // @OneToMany(cascade = CascadeType.ALL, mappedBy="evenement")
     // private List<Prestataire> prestataires;
 
+    @JsonIgnore
+    @OneToMany(mappedBy = "evenement",fetch = FetchType.LAZY,cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+    private Set<Prestation> prestations = new HashSet<>();
+
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "client")
     private Client client;
 
-
-    public Set<Prestataire> getPrestataires() {
-        return null;
-    }
 
 } 
