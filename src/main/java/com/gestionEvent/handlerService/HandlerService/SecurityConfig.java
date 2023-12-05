@@ -57,7 +57,7 @@ public class SecurityConfig implements WebMvcConfigurer {
 			.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 		.authorizeRequests(authorizeRequests ->
 			authorizeRequests
-				.requestMatchers(HttpMethod.POST, "/login","/inscriptionClient","/inscriptionPrestataire").permitAll()
+				.requestMatchers(HttpMethod.POST, "/login","/inscriptionClient","/inscriptionPrestataire","event/prestataires").permitAll()
 				.anyRequest().authenticated()
 				)
 		.exceptionHandling().authenticationEntryPoint(exceptionHandler).and()

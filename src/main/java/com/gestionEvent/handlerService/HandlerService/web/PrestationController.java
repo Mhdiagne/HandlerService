@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -83,6 +84,14 @@ public class PrestationController {
         }else{ 
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
+    }
+
+    @DeleteMapping("/{ide}/{idp}")
+    public void deletePrestation(@PathVariable Long ide, @PathVariable Long idp) {
+        PrestationPK pk = new PrestationPK();
+        pk.setIdEvenement(ide);
+        pk.setIdPrestataire(idp);
+        prestationRepository.deleteById(pk);
     }
     
 }

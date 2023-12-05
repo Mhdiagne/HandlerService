@@ -75,7 +75,7 @@ public class Evenement {
     // private List<Prestataire> prestataires;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "evenement",fetch = FetchType.LAZY,cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+    @OneToMany(mappedBy = "evenement",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     private Set<Prestation> prestations = new HashSet<>();
 
 

@@ -87,7 +87,7 @@ public class Prestataire {
 	// private Set<Evenement> evenements = new HashSet<>();	
 
     @JsonIgnore
-    @OneToMany(mappedBy = "prestataire",fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "prestataire",fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
     private Set<Prestation> prestations = new HashSet<>();
  
     public String getStarRating() {
