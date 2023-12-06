@@ -63,7 +63,9 @@ public class HandlerServiceApplication implements CommandLineRunner {
 		Prestataire p1 = new Prestataire("Kama","Faly","6Point9","kfjsdgnfkjdjfdbkds","339089485","Dakar","coly@gmail.com","Habilleur","admin","$2a$10$8cjz47bjbR4Mn8GMg9IZx.vyjhLXR/SKKMSZ9.mP9vpMu0ssKi8GW",200000,5,b,"PRESTATAIRE");
 		Prestataire p2 = new Prestataire("Doumbia","Mansour","NessNessi","on est meilleur","789340348","Ziguinchor","diagne@gmail.com","Photographe","user","$2a$10$NVM0n8ElaRgg7zWO1CxUdei7vWoPg91Lz2aYavh9.f9q0e4bRadue",450000,3,b,"PRESTATAIRE");
 		Prestataire p3 = new Prestataire("Toure","Bachir","Al_BachirPrest","on est meilleur","789340348","Dakar","albachprest@gmail.com","Decoration","Al_BachirPrest","$2a$10$NVM0n8ElaRgg7zWO1CxUdei7vWoPg91Lz2aYavh9.f9q0e4bRadue",450000,3,b,"PRESTATAIRE");
-		prepository.saveAll(Arrays.asList(p2,p1,p3));
+		Prestataire p4 = new Prestataire("Diop","Mouhamed","Kiki Traiteur","Meilleur Traiteur","789322348","Dakar","kikiTraiteur@gmail.com","Traiteur - Cuisine","kiki_Traiteur","$2a$10$NVM0n8ElaRgg7zWO1CxUdei7vWoPg91Lz2aYavh9.f9q0e4bRadue",500000,5,b,"PRESTATAIRE");
+		Prestataire p5 = new Prestataire("Fall","Ibra","Saam Faal","Zikroulah Doley Sowrou me","771234567","Dakar","zikr@gmail.com","Sikar Bay Fall","lamp Fall","$2a$10$NVM0n8ElaRgg7zWO1CxUdei7vWoPg91Lz2aYavh9.f9q0e4bRadue",450000,4,b,"PRESTATAIRE");
+		prepository.saveAll(Arrays.asList(p2,p1,p3,p4,p5));
 
 		// PrestationPK pk1 = new PrestationPK();
 		// pk1.setIdEvenement(2);
