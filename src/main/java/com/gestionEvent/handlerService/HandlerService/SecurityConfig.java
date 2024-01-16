@@ -57,7 +57,7 @@ public class SecurityConfig implements WebMvcConfigurer {
 			.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 		.authorizeRequests(authorizeRequests ->
 			authorizeRequests
-				.requestMatchers(HttpMethod.POST, "/login","/inscriptionClient","/inscriptionPrestataire","event/prestataires").permitAll()
+				.requestMatchers(HttpMethod.POST, "/login","/inscriptionClient","/inscriptionPrestataire","/event/prestataires").permitAll()
 				.anyRequest().authenticated()
 				)
 		.exceptionHandling().authenticationEntryPoint(exceptionHandler).and()
@@ -83,14 +83,14 @@ public class SecurityConfig implements WebMvcConfigurer {
 
 
 
-    // @Override
-    // public void addCorsMappings(CorsRegistry registry) {
-    //     registry.addMapping("/**")
-    //             .allowedOrigins("http://localhost:3000")
-    //             .allowedMethods("GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS")
-    //             .allowedHeaders("*")
-    //             .allowCredentials(true);
-    // }
+    @Override
+    public void addCorsMappings(CorsRegistry registry) {
+        registry.addMapping("/**")
+                .allowedOrigins("http://localhost:3000")
+                .allowedMethods("GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS")
+                .allowedHeaders("*")
+                .allowCredentials(true);
+    }
 
 	
 	@Autowired
